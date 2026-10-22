@@ -20,7 +20,11 @@ def get_mode():
 def get_user_input(mark: str) -> tuple[int, int]:
     while True:
         move = input(f"{mark}, enter row and column (1-3), e.g. 2 3: ")
-        row, col = move.split()
+        parts = move.split()
+        if len(parts) != 2:
+            print("Enter exactly two whole numbers, e.g. 2 3")
+            continue
+        row, col = parts
         if not row.isdigit() or not col.isdigit():
             print("Enter exactly two whole numbers, e.g. 2 3")
             continue
