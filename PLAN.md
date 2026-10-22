@@ -20,9 +20,9 @@
 - **Game (`game.py`):** Coordinates turns and game outcomes for two-player mode or computer mode through the Board and AI interfaces.
 - **Terminal interface (`main.py`):** Handles all menus, input validation, conversion from 1-based to 0-based coordinates, and printed output.
 - **Tests (`tests/`):** Verify board rules, turn handling, input behavior, and AI behavior with pytest and seeded randomness.
-- **Test configuration (`conftest.py`):** Provides the root-level pytest configuration file required by the assessment, initially empty.
+- **Test configuration (`conftest.py`):** Provides the root-level pytest configuration file.
 - **Dependencies (`requirements.txt`):** Records the packages needed to reproduce the project's Python environment.
-- **CI workflow (`.github/workflows/ci.yml`):** Runs pytest on pull requests and pushes to main using the assessment's supplied workflow.
+- **CI workflow (`.github/workflows/ci.yml`):** Runs pytest on pull requests and pushes to main.
 
 
 ## Decisions
