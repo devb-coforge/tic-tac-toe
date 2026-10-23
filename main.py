@@ -1,9 +1,12 @@
+from random import Random
+
+from ai import EasyAI
 from game import Game
 
 
 def get_mode():
     print("Please select a mode:")
-    print("1. Single Player (not available yet)")
+    print("1. Single Player")
     print("2. Two Player")
     while True:
         mode = input("Enter your choice: ").strip()
@@ -11,8 +14,9 @@ def get_mode():
             print("You have selected Two Player")
             return "two"
         if mode == "1":
-            print("Single Player is not available yet.")
-            pass
+            print("You have selected Single Player")
+            print("You play X. The computer plays O.")
+            return "single"
         else:
             print("Invalid choice")
 
@@ -46,15 +50,20 @@ def print_board(board):
 
 def main():
     print("Welcome to Tic Tac Toe!")
-    _ = get_mode() #will add single vs two player mode here
-    game = Game()
+    mode = get_mode()
+    ai = EasyAI(Random()) if mode == "single" else None
+    game = Game(ai)
     print_board(game.board)
 
     while game.winner is None and not game.is_draw:
-        row, col = get_user_input(game.current_mark)
-        if not game.turn(row, col):
-            print("That cell is taken. Try again.")
-            continue
+        if game.is_ai_turn():
+            print("AI (O) is choosing a move...")
+            game.ai_move()
+        else:
+            row, col = get_user_input(game.current_mark)
+            if not game.turn(row, col):
+                print("That cell is taken. Try again.")
+                continue
         print_board(game.board)
 
     if game.winner is not None:
