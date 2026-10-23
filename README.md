@@ -1,14 +1,17 @@
 # Tic-Tac-Toe
 
-A terminal Tic-Tac-Toe game for two human players on a 3x3 board.
+A terminal Tic-Tac-Toe game for two human players or one human against an AI on a 3x3 board.
 
-## Implemented
+## Features
 
 - X goes first, then players alternate after each accepted move.
 - Occupied and off-board cells are rejected without using up the turn.
 - The board is displayed at the start and after every accepted move.
 - Wins across rows, columns, and both diagonals are detected.
 - A full board without a winner ends in a draw. No further moves are accepted after a win or draw.
+- Single-player mode assigns X to the human and O to the AI.
+- Easy AI chooses a random empty cell. Hard AI uses minimax to play optimally and never loses when playing second.
+- An abstract AI class defines the move-selection interface. EasyAI and HardAI inherit from it, and Game uses that interface to request computer moves.
 
 ## Setup
 
@@ -26,7 +29,7 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-Choose `2` for Two Player. On each turn, enter a row and column from 1 to 3, separated by a space. For example, `2 3` places a mark in the second row, third column. Empty cells appear as `_`.
+Choose `1` for Single Player or `2` for Two Player. Single-player mode then offers `1` for Easy or `2` for Hard. You play X and the AI automatically plays O after each accepted human move, unless the game has ended.
 
 ## Tests
 
@@ -35,4 +38,6 @@ With the virtual environment active, run:
 ```bash
 python -m pytest -q
 ```
+
+Tests inject seeded `random.Random` instances to AI so their results are repeatable. 
 
