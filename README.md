@@ -10,7 +10,8 @@ A terminal Tic-Tac-Toe game for two human players or one human against an AI on 
 - Wins across rows, columns, and both diagonals are detected.
 - A full board without a winner ends in a draw. No further moves are accepted after a win or draw.
 - Single-player mode assigns X to the human and O to the AI.
-- An abstract AI class defines the move-selection interface. Subclasses inherits from it, and Game uses that interface to request computer moves.
+- Easy AI chooses a random empty cell. Hard AI uses minimax to play optimally and never loses when playing second.
+- An abstract AI class defines the move-selection interface. EasyAI and HardAI inherit from it, and Game uses that interface to request computer moves.
 
 ## Setup
 
@@ -28,7 +29,7 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-Choose `1` for Single Player  or `2` for Two Player. In single-player mode, you play X and the AI automatically plays O after each accepted human move, unless the game has ended.
+Choose `1` for Single Player or `2` for Two Player. Single-player mode then offers `1` for Easy or `2` for Hard. You play X and the AI automatically plays O after each accepted human move, unless the game has ended.
 
 ## Tests
 

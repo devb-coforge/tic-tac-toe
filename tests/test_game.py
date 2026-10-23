@@ -2,7 +2,7 @@ from random import Random
 
 import pytest
 
-from ai import AI
+from ai import AI, HardAI
 from game import Game
 
 
@@ -151,6 +151,18 @@ def test_computer_uses_ai_interface_to_play_o_after_human():
     assert game.is_ai_turn() is False
     assert game.ai_move() is False
     assert len(ai.calls) == 1
+
+
+def test_hard_ai_plays_through_game_interface():
+    game = Game(HardAI(Random(0)))
+    assert game.turn(0, 0) is True
+
+    assert game.ai_move() is True
+
+    assert game.board.get_cell(0, 0) == "X"
+    assert game.board.get_cell(1, 1) == "O"
+    assert len(game.board.empty_cells()) == 7
+    assert game.current_mark == "X"
 
 
 def test_two_player_game_does_not_take_ai_turns(game):

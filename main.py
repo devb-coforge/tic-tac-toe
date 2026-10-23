@@ -1,6 +1,6 @@
 from random import Random
 
-from ai import EasyAI
+from ai import EasyAI, HardAI
 from game import Game
 
 
@@ -19,6 +19,21 @@ def get_mode():
             return "single"
         else:
             print("Invalid choice")
+
+
+def get_difficulty():
+    print("Please select a difficulty:")
+    print("1. Easy")
+    print("2. Hard")
+    while True:
+        difficulty = input("Enter your choice: ").strip()
+        if difficulty == "1":
+            print("You have selected Easy AI")
+            return "easy"
+        if difficulty == "2":
+            print("You have selected Hard AI")
+            return "hard"
+        print("Invalid choice")
 
 
 def get_user_input(mark: str) -> tuple[int, int]:
@@ -51,7 +66,10 @@ def print_board(board):
 def main():
     print("Welcome to Tic Tac Toe!")
     mode = get_mode()
-    ai = EasyAI(Random()) if mode == "single" else None
+    ai = None
+    if mode == "single":
+        difficulty = get_difficulty()
+        ai = EasyAI(Random()) if difficulty == "easy" else HardAI(Random())
     game = Game(ai)
     print_board(game.board)
 
