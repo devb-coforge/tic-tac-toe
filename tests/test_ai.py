@@ -2,7 +2,7 @@ from random import Random
 
 import pytest
 
-from ai import AI, EasyAI
+from ai import AI, EasyAI, HardAI
 from board import Board
 
 
@@ -68,3 +68,46 @@ def test_easy_rejects_a_full_board_without_changing_it():
         EasyAI(Random(0)).choose_move(board, "O")
 
     assert board_state(board) == before
+
+
+def test_hard_takes_a_winning_move():
+    board = Board()
+    for row, col in [(0, 0), (0, 1), (2, 0)]:
+        board.place_mark(row, col, "X")
+    for row, col in [(1, 0), (1, 1)]:
+        board.place_mark(row, col, "O")
+
+    assert HardAI(Random(0)).choose_move(board, "O") == (1, 2)
+
+
+def test_hard_choose_move_leaves_board_unchanged():
+    board = Board()
+    board.place_mark(0, 0, "X")
+    board.place_mark(1, 1, "O")
+    board.place_mark(2, 2, "X")
+    before = board_state(board)
+
+    HardAI(Random(0)).choose_move(board, "O")
+
+    assert board_state(board) == before
+
+
+def test_hard_never_loses_when_playing_second():
+    board = Board()
+    ai = HardAI(Random(0))
+
+    def play_all_human_moves():
+        for row, col in board.empty_cells():
+            board.place_mark(row, col, "X")
+            assert board.has_won("X") is False
+
+            if not board.is_full():
+                ai_row, ai_col = ai.choose_move(board, "O")
+                assert board.place_mark(ai_row, ai_col, "O") is True
+                if not board.has_won("O") and not board.is_full():
+                    play_all_human_moves()
+                board.remove_mark(ai_row, ai_col)
+
+            board.remove_mark(row, col)
+
+    play_all_human_moves()

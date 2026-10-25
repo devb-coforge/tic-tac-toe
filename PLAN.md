@@ -1,3 +1,7 @@
+## Goal
+
+Build a terminal Tic-Tac-Toe game on a 3x3 board for two human players or one human playing against a computer. The human plays X against the computer's O and can choose an Easy opponent that selects random empty cells or a Hard opponent that uses minimax and never loses when playing second.
+
 ## Requirements
 
 | ID | Requirement | Type | How to verify |
@@ -24,7 +28,6 @@
 - **Dependencies (`requirements.txt`):** Records the packages needed to reproduce the project's Python environment.
 - **CI workflow (`.github/workflows/ci.yml`):** Runs pytest on pull requests and pushes to main.
 
-
 ## Decisions
 
 ### D1: Board storage
@@ -33,7 +36,7 @@
 
 **Chosen:** A nested list inside Board, stored in an underscore-prefixed attribute.
 
-**Why:** Rows and columns map naturally to a 3×3 grid, and accessing the grid through Board methods keeps its representation separate from the rest of the game.
+**Why:** Rows and columns map naturally to a 3x3 grid, and accessing the grid through Board methods keeps its representation separate from the rest of the game.
 
 ### D2: Share the AI interface
 
@@ -43,4 +46,10 @@
 
 **Why:** Game can request a move through the same interface regardless of the selected difficulty. Each AI receives a `random.Random` object so tests can control randomness.
 
+## What changed
 
+- Added the two-player game with alternating turns, win/draw detection, and invalid-move rejection without losing a turn.
+- Implemented input validation to require exactly two whole numbers within the board’s bounds.
+- Added `get_cell()` and `get_board_size()` so the terminal can display the board without accessing its internal grid.
+- Implemented HardAI using minimax, cached position scores to avoid repeated calculations, and restored the board after simulated moves. Equally scored moves are selected using the random generator.
+- Added GitHub Actions CI and expanded README instructions for setup, gameplay, difficulty selection, and testing.
